@@ -23,6 +23,7 @@ En esta práctica, se desarrollan las habilidades necesarias para controlar el r
     - [Análisis](#análisis)
     - [ROS](#ros)
     - [Toolbox](#toolbox)
+    - [Análisis en MATLAB](análisis-en-matlab-con-robotics-toolbox)
     - [Conexión con Python](#conexión-con-python)
     - [Python + ROS + Toolbox](#python--ros--toolbox)
 
@@ -51,12 +52,10 @@ En esta práctica, se desarrollan las habilidades necesarias para controlar el r
 
 - **Descripción:** Se identificaron los eslabones y las articulaciones. Posteriormente se establecieron las longitudes de eslabón para cada articulación del robot Phantom X Pincher utilizando un calibrador.
 
-<img src="medida.png" alt="Diagrama de mediciones" style="max-height: 500px; display: block; margin-left: auto; margin-right: auto;"/>
+<img src="medida.png" alt="Diagrama de mediciones" style="max-height: 350px; display: block; margin-left: auto; margin-right: auto;"/>
 
 <p align="center">Figura 1: Diagrama de mediciones</p>
 
-
-- **Archivos relacionados:** [Mediciones](./resultados/mediciones.md)
 
 ### Análisis
 
