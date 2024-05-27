@@ -126,14 +126,45 @@ El código en Python utiliza la biblioteca `roboticstoolbox` para modelar y cont
 
 - **Archivos relacionados:** [Toolbox Script](PhantomXtoolbox.py)
 
+### Análisis en Matlab con Robotics Toolbox
+
+Este código de MATLAB define y visualiza un modelo cinemático de un brazo robótico utilizando la Toolbox de Robótica de Peter Corke, basado en los parámetros de Denavit-Hartenberg (DH).
+
+```matlab
+%Parametros DH usando Toolbox de Peter Corke
+L1=11.30 ; L2 = 10.07 ; L3 = 10.07 ; L4 = 8.50 ;
+
+%Serie de eslabones
+%L(i) = Link ([Th d a alph]);
+L(1)=Link([0 11.3 0 pi/2]);
+L(2)=Link([0 0 10.07 0]);
+L(3)=Link([0 0 10.07 0]);
+L(4)=Link([0 0 8.50 pi/2]);
+
+Rob = SerialLink (L);
+Rob.name = 'PhantomX';
+
+Rob.plot([0 pi/2 0 0]);
+```
+
 ### Conexión con Python
 
 - **Descripción:** Creación de un script que permite publicar en cada tópico de controlador de articulación y suscribirse a ellos para retornar la configuración de 5 ángulos en grados.
 
-El código en Python utiliza las bibliotecas `rospy` y `roboticstoolbox` para controlar los motores Dynamixel AX-12 del robot Phantom X Pincher mediante ROS. Primero, define los parámetros Denavit-Hartenberg (DH) de cada eslabón del robot y los almacena en una lista de eslabones `links`, que se usan para instanciar el objeto `DHRobot`. También se asigna una herramienta al robot mediante una matriz de transformación homogénea y se definen los límites articulares para cada motor. El script contiene una función `call_service` para realizar llamadas a servicios ROS que controlan los motores, y una función `check_limits` para verificar que los valores articulares estén dentro de los límites permitidos. En la función principal `main`, se inicializa el nodo ROS, se habilitan los torques de los motores y se solicita al usuario que ingrese ángulos deseados para cada articulación. Los ángulos se escalan y verifican antes de mover el modelo simulado y el robot real a las posiciones objetivo utilizando servicios ROS para ajustar la velocidad y la posición de cada motor. El ciclo se repite continuamente, permitiendo un control interactivo del robot.
+El primer script en Python controla los motores Dynamixel a través de ROS. Utiliza la biblioteca rospy para interactuar con ROS y DynamixelCommand para enviar comandos a los motores. Define límites articulares para cada motor en el diccionario joint_limits. La función call_service se encarga de invocar el servicio /dynamixel_workbench/dynamixel_command para enviar comandos a los motores, mientras que check_limits verifica que los valores de posición de los motores estén dentro de los límites permitidos. En la función principal main, se inicializa el nodo ROS, se habilitan los torques de los motores, y se establecen posiciones de "home" y "objetivo" para los motores, asegurándose de que cada posición esté dentro de los límites antes de enviar los comandos de velocidad y posición.
 
 
-- **Archivos relacionados:** [Python + ROS Script](PhantomXF.py)
+- **Archivos relacionados:** [Python + ROS | Control de articulaciones](conexion1.py)
+
+Este último script, además de controlar los motores Dynamixel y establecer posiciones como en el primer script, añade la funcionalidad de suscribirse a los tópicos de estado de las articulaciones para monitorear en tiempo real las posiciones de las mismas. La función joint_states_callback se encarga de imprimir los nombres y posiciones de las articulaciones cuando se reciben datos del tópico /dynamixel_workbench/joint_states. Esto permite obtener retroalimentación en tiempo real sobre el estado de las articulaciones, lo cual no se realiza en el primer script. Además, el script utiliza rospy.spin() para mantener el nodo activo y continuar recibiendo actualizaciones de los estados de las articulaciones.
+
+
+El funcionamiento de este script se puede ver en el siguiente video:
+
+[Video Movimiento con ROS](https://youtu.be/CMx_UWP4ikA)
+
+
+- **Archivos relacionados:** [Python + ROS | Subscripción a tópicos](conexion2.py)
 
 ### Python + ROS + Toolbox
 
